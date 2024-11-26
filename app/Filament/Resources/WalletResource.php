@@ -11,9 +11,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Pelmered\FilamentMoneyField\Forms\Components\MoneyInput;
 
 class WalletResource extends Resource
 {
@@ -25,14 +27,14 @@ class WalletResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
-                TextInput::make('amount')
-                    ->numeric(),
+                TextInput::make('name')
+                    ->required(),
                 Select::make('type')
+                    ->required()
                     ->options([
-                        'bank',
-                        'cash',
-                        'investment'
+                        'bank' => 'Bank',
+                        'cash' => 'Cash',
+                        'investment' => 'Investment'
                     ])
             ]);
     }
@@ -41,7 +43,18 @@ class WalletResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->searchable()
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'bank' => 'info',
+                        'cash' => 'warning',
+                        'investment' => 'success',
+                    })
             ])
             ->filters([
                 //

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('amount');
             $table->enum('type', ['bank', 'cash', 'investment']);
             $table->timestamps();
             $table->softDeletes();
