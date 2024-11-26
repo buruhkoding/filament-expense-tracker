@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'madfizh',
-        //     'email' => 'madfizh@mail.com',
-        //     'password' => 'asu123'
-        // ]);
+        User::factory()->create([
+            'name' => 'madfizh',
+            'email' => 'madfizh@mail.com',
+            'password' => 'asu123'
+        ]);
 
         Wallet::insert([
             [
